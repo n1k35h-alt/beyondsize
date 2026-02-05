@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>beyondsize</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Admin login icon in navbar */
+    .admin-login {
+      font-size: 0.9rem;
+      color: #ff6f61;
+      cursor: pointer;
+      margin-left: 15px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .admin-login:hover {
+      color: #111;
+    }
+    .admin-login svg {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">beyondsize</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+      <!-- Admin Login icon -->
+      <li>
+        <a href="admin/login.html" class="admin-login" title="Admin Login">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.667 0 1-.333 1-1V7a3 3 0 00-6 0v3c0 .667.333 1 1 1h4zM5 11h14a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2z"/>
+          </svg>
+          Admin
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-bs">
+    <div class="hero-inner">
+      <h1>beyondsize</h1>
+      <p>essentials designed beyond limits</p>
+      <a href="shop.html" class="btn-outline">view collection</a>
+    </div>
+  </section>
+
+  <!-- EDITORIAL SECTION -->
+  <section class="editorial">
+    <h2>Designed Beyond Standard</h2>
+    <p>
+      beyondsize focuses on fit, comfort, and simplicity.
+      No noise. Just essentials made right.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 beyondsize</p>
+  </footer>
+
+  <script src="js/cart.js"></script>
+</body>
+</html>

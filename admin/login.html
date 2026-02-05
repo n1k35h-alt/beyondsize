@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | beyondsize</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      color: #111;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #e55b50;
+    }
+
+    .error {
+      color: red;
+      margin-bottom: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Admin Login</h2>
+    <div class="error" id="errorMsg">Invalid Credentials</div>
+    <input type="text" id="adminId" placeholder="Admin ID">
+    <input type="password" id="adminPw" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <script>
+    // Set a secret admin username and password
+    const ADMIN_ID = "beyondMaster2026";      // Change to something only you know
+    const ADMIN_PW = "bS!@#SecureLogin$2026"; // Very strong password
+
+    function login() {
+      const id = document.getElementById("adminId").value;
+      const pw = document.getElementById("adminPw").value;
+      const errorMsg = document.getElementById("errorMsg");
+
+      if(id === ADMIN_ID && pw === ADMIN_PW) {
+        // Credentials correct, go to admin dashboard
+        window.location.href = "dashboard.html";
+      } else {
+        // Wrong credentials
+        errorMsg.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>

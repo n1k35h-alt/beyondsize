@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | beyondsize</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">beyondsize</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <!-- CHECKOUT CONTAINER -->
+  <section class="checkout-container">
+    <h2>Checkout</h2>
+
+    <!-- CUSTOMER DETAILS -->
+    <div class="section">
+      <h3>Customer Details</h3>
+      <div class="input-group">
+        <label for="customerName">Full Name</label>
+        <input type="text" id="customerName" placeholder="Your Name">
+      </div>
+      <div class="input-group">
+        <label for="customerPhone">Phone Number</label>
+        <input type="text" id="customerPhone" placeholder="98XXXXXXXX">
+      </div>
+      <div class="input-group">
+        <label for="customerAddress">Delivery Address</label>
+        <textarea id="customerAddress" rows="3" placeholder="Your Address"></textarea>
+      </div>
+    </div>
+
+    <!-- ORDER SUMMARY -->
+    <div class="section">
+      <h3>Order Summary</h3>
+      <div class="order-summary" id="orderSummary"></div>
+    </div>
+
+    <!-- PAYMENT METHOD -->
+    <div class="section payment-method">
+      <h3>Payment Method</h3>
+      <p><strong>Pay via eSewa (QR)</strong></p>
+      <img src="assets/QR.jpeg" alt="eSewa QR Code">
+      <p class="note">
+        Scan the QR using eSewa app and complete payment.<br>
+        After payment, click "Place Order".
+      </p>
+    </div>
+
+    <button class="place-order-btn" onclick="placeOrder()">Place Order</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 beyondsize</p>
+  </footer>
+
+  <!-- CART & CHECKOUT SCRIPT -->
+  <script src="js/cart.js"></script>
+  <script>
+    const orderSummary = document.getElementById("orderSummary");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let total = 0;
+
+    // DISPLAY CART ITEMS IN ORDER SUMMARY
+    if(cart.length === 0){
+      orderSummary.innerHTML = "<p>Your cart is empty</p>";
+    } else {
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        orderSummary.innerHTML += `
+          <p>
+            <span>${item.name} × ${item.quantity}</span>
+            <span>Rs. ${itemTotal}</span>
+          </p>
+        `;
+      });
+
+      orderSummary.innerHTML += `
+        <hr>
+        <p class="total">
+          <span>Total</span>
+          <span>Rs. ${total}</span>
+        </p>
+      `;
+    }
+
+    // PLACE ORDER FUNCTION
+    function placeOrder(){
+      if(cart.length === 0){
+        alert("Cart is empty!");
+        return;
+      }
+
+      const customerName = document.getElementById("customerName").value;
+      const customerPhone = document.getElementById("customerPhone").value;
+      const customerAddress = document.getElementById("customerAddress").value;
+
+      if(!customerName || !customerPhone || !customerAddress){
+        alert("Please fill in all details");
+        return;
+      }
+
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+      orders.push({
+        customerName,
+        customerPhone,
+        customerAddress,
+        cart,
+        total
+      });
+
+      localStorage.setItem("orders", JSON.stringify(orders));
+
+      alert("Order placed successfully!");
+      localStorage.removeItem("cart");
+      updateCartCount();
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

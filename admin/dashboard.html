@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | beyondsize Admin</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .admin-container { max-width: 1000px; margin: 50px auto; }
+    h2 { text-align: center; margin-bottom: 20px; }
+    .logout-btn { float: right; background:#dc3545; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer; }
+    .section { margin-bottom: 40px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    table, th, td { border:1px solid #ddd; }
+    th, td { padding:10px; text-align:left; }
+    .action-btn { padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
+    .edit-btn { background:#007bff; color:white; }
+    .delete-btn { background:#dc3545; color:white; }
+  </style>
+</head>
+<body onload="initDashboard()">
+<div class="admin-container">
+  <h2>Admin Dashboard <button class="logout-btn" onclick="adminLogout()">Logout</button></h2>
+
+  <!-- PRODUCTS SECTION -->
+  <div class="section">
+    <h3>Products <a href="add-product.html" style="float:right;">Add New Product</a></h3>
+    <table id="productsTable">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ORDERS SECTION -->
+  <div class="section">
+    <h3>Orders <button onclick="clearOrders()" style="float:right;">Clear Orders</button></h3>
+    <table id="ordersTable">
+      <tr>
+        <th>#</th>
+        <th>Customer</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Items</th>
+        <th>Total</th>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<script src="../js/admin.js"></script>
+<script>
+function initDashboard(){
+  checkAdminLogin();
+  displayProducts();
+  displayOrders();
+}
+
+function displayProducts(){
+  const table = document.getElementById("productsTable");
+  const products = getProducts();
+
+  // Clear existing rows except header
+  table.innerHTML = `
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Actions</th>
+    </tr>
+  `;
+
+  products.forEach((p, index)=>{
+    const row = table.insertRow();
+    row.innerHTML = `
+      <td>${index+1}</td>
+      <td>${p.name}</td>
+      <td>Rs. ${p.price}</td>
+      <td>${p.stock}</td>
+      <td>
+        <button class="action-btn edit-btn" onclick="editProduct(${index})">Edit</button>
+        <button class="action-btn delete-btn" onclick="deleteProduct(${index}); displayProducts()">Delete</button>
+      </td>
+    `;
+  });
+}
+
+function displayOrders(){
+  const table = document.getElementById("ordersTable");
+  const orders = getOrders();
+
+  // Clear existing rows except header
+  table.innerHTML = `
+    <tr>
+      <th>#</th>
+      <th>Customer</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Items</th>
+      <th>Total</th>
+    </tr>
+  `;
+
+  orders.forEach((o, index)=>{
+    const row = table.insertRow();
+    row.innerHTML = `
+      <td>${index+1}</td>
+      <td>${o.customerName}</td>
+      <td>${o.customerPhone}</td>
+      <td>${o.customerAddress}</td>
+      <td>${o.cart.map(i=>i.name+" x "+i.quantity).join(", ")}</td>
+      <td>Rs. ${o.total}</td>
+    `;
+  });
+}
+
+// ====== EDIT PRODUCT ======
+function editProduct(index){
+  const products = getProducts();
+  const p = products[index];
+  localStorage.setItem("editProductIndex", index);
+  localStorage.setItem("editProductData", JSON.stringify(p));
+  window.location.href = "add-product.html";
+}
+</script>
+</body>
+</html>

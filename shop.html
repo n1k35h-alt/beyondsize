@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shop | beyondsize</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">beyondsize</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <!-- SHOP HEADER -->
+  <section class="shop-header">
+    <h1>Shop</h1>
+  </section>
+
+  <!-- PRODUCT GRID -->
+  <section class="shop-container" id="shopContainer">
+    <!-- Products will be dynamically inserted here -->
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 beyondsize</p>
+  </footer>
+
+  <script src="js/cart.js"></script>
+  <script>
+    // Load products from localStorage
+    function loadProducts() {
+      const container = document.getElementById("shopContainer");
+      const products = JSON.parse(localStorage.getItem("products")) || [];
+      container.innerHTML = "";
+
+      if(products.length === 0){
+        container.innerHTML = "<p style='text-align:center;'>No products available yet.</p>";
+        return;
+      }
+
+      products.forEach((p, index) => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+        div.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>Rs. ${p.price}</p>
+          <button onclick="addToCart('${p.name}', ${p.price}, '${p.image}')">Add to Cart</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Call on page load
+    loadProducts();
+  </script>
+</body>
+</html>
